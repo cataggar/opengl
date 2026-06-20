@@ -98,9 +98,9 @@ fn generate(
         \\pub fn load(getProcAddress: anytype) !void {
         \\    @setEvalBranchQuota(100000);
         \\    const function_names = comptime blk: {
-        \\        const fields = @typeInfo(Functions).@"struct".fields;
-        \\        var names: [fields.len][*:0]const u8 = undefined;
-        \\        for (&names, fields) |*name, field| name.* = "gl" ++ &[_]u8{std.ascii.toUpper(field.name[0])} ++ field.name[1..];
+        \\        const field_names = @typeInfo(Functions).@"struct".field_names;
+        \\        var names: [field_names.len][*:0]const u8 = undefined;
+        \\        for (&names, field_names) |*name, field_name| name.* = "gl" ++ &[_]u8{std.ascii.toUpper(field_name[0])} ++ field_name[1..];
         \\        break :blk names;
         \\    };
         \\    const function_pointers: *[function_names.len]?*const anyopaque = @ptrCast(&functions);
@@ -112,9 +112,9 @@ fn generate(
     if (extensions.len > 0) {
         try writer.writeAll(
             \\    const extension_names = comptime blk: {
-            \\        const fields = @typeInfo(Extensions).@"struct".fields;
-            \\        var names: [fields.len][]const u8 = undefined;
-            \\        for (&names, fields) |*name, field| name.* = "GL_" ++ field.name;
+            \\        const field_names = @typeInfo(Extensions).@"struct".field_names;
+            \\        var names: [field_names.len][]const u8 = undefined;
+            \\        for (&names, field_names) |*name, field_name| name.* = "GL_" ++ field_name;
             \\        break :blk names;
             \\    };
             \\    const extension_flags: *[extension_names.len]bool = @ptrCast(&extensions);
