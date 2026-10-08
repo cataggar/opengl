@@ -18,9 +18,7 @@ pub fn build(b: *std.Build) void {
     const run_cmd = b.addRunArtifact(exe);
     run_step.dependOn(&run_cmd.step);
     run_cmd.step.dependOn(b.getInstallStep());
-    if (b.args) |args| {
-        run_cmd.addArgs(args);
-    }
+    run_cmd.addPassthruArgs();
 
     const registry = b.option(std.Build.LazyPath, "registry", "Path to OpenGL registry") orelse b.path("src/gl.xml");
     const api = b.option(enum { gl, gles1, gles2, glsc2 }, "api", "Target API") orelse .gl;
