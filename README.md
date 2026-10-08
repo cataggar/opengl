@@ -1,5 +1,7 @@
 # Zig OpenGL binding generator
 
+Requires Zig 0.17.0 or newer.
+
 ## Usage
 
 `build.zig`
@@ -22,3 +24,13 @@
 
 A default copy of `gl.xml` is provided, as the upstream repository includes
 unnecessary files. To use a different copy, set the `registry` build option.
+
+To run the generator directly:
+
+```sh
+zig build run -- src/gl.xml gl.zig gl 4.6 core
+```
+
+Arguments remain ordered as registry, output, API, version, profile, and an
+optional extensions file. `zig build` installs both the generator and the
+configured bindings in `zig-out`.
